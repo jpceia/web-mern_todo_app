@@ -1,57 +1,42 @@
-import React, { Component } from 'react';
+import React, { useState } from 'react';
 import axios from 'axios';
 import Input from './Input';
 import ListTodo from './ListTodo';
 
-class Todo extends Component {
-    state = {
-        todos: [],
-    };
+const Todo = props => {
+    const [todos, setTodos] = useState([]);
 
-    componentDidMount() {
-        this.getTodos();
-    }
-
-    getTodos = () => {
-        axios
-            .get('/api/todos')
+    const getTodos = () => {
+        axios.get('/api/todos')
             .then((response) => {
                 if (response.data)
-                {
-                    this.setState({ todos: response.data });
-                }
+                    setTodos(response.data);
+            })
+            .catch(error => {
+                console.log(error);
+            });
+    };
+
+    const deleteTodo = (id) => {
+        axios.delete(`/api/todos/${id}`)
+            .then((response) => {
+                if (response.data)
+                    getTodos();
             })
             .catch((error) => {
                 console.log(error);
             });
     };
 
-    deleteTodo = (id) => {
-        axios
-            .delete(`/api/todos/${id}`)
-            .then((response) => {
-                if (response.data)
-                {
-                    this.getTodos();
-                }
-            })
-            .catch((error) => {
-                console.log(error);
-            });
-    };
+    React.useEffect(getTodos, []);
 
-    render()
-    {
-        let { todos } = this.state;
-
-        return (
-            <div>
-                <h1>My Todo(s)</h1>
-                <Input getTodos={this.getTodos} />
-                <ListTodo todos={todos} deleteTodo={this.deleteTodo} />
-            </div>
-        );
-    };
-}
+    return (
+        <div>
+            <h1>My Todo(s)</h1>
+            <Input getTodos={getTodos} />
+            <ListTodo todos={todos} deleteTodo={deleteTodo} />
+        </div>
+    );
+};
 
 export default Todo;

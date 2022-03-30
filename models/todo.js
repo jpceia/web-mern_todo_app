@@ -1,4 +1,5 @@
-const mongoose = require('mongoose');
+import mongoose from 'mongoose';
+
 const Schema = mongoose.Schema;
 
 // Create schema for todo
@@ -12,4 +13,4 @@ const TodoSchema = new Schema({
 // Create model for todo
 const Todo = mongoose.model('todo', TodoSchema);
 
-module.exports = Todo;
+export default Todo;

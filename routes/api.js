@@ -1,15 +1,15 @@
-const express = require('express');
-const Todo = require('../models/todo');
-const router = express.Router();
+import express from 'express';
+import Todo from '../models/todo.js';
 
+const routes = express.Router();
 
-router.get('/todos', (req, res, next) => {
+routes.get('/todos', (req, res, next) => {
     Todo.find({}, 'action')
         .then((data) => res.json(data))
         .catch(next);
 });
 
-router.post('/todos', (req, res, next) => {
+routes.post('/todos', (req, res, next) => {
     if (req.body.action)
     {
         Todo.create(req.body)
@@ -24,10 +24,10 @@ router.post('/todos', (req, res, next) => {
     }
 });
 
-router.delete('/todos/:id', (req, res, next) => {
+routes.delete('/todos/:id', (req, res, next) => {
     Todo.findByIdAndRemove({ _id: req.params.id })
         .then((data) => res.json(data))
         .catch(next);
 });
 
-module.exports = router;
+export default routes;

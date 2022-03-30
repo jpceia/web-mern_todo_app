@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import axios from 'axios';
+import * as api from '../api/index';
 
 class Input extends Component {
     state = {
@@ -10,8 +10,7 @@ class Input extends Component {
         const task = { action: this.state.action };
 
         if (task.action && task.action.length > 0) {
-            axios
-                .post('/api/todos', task)
+            api.createTodo(task)
                 .then((response) => {
                     if (response.data)
                     {

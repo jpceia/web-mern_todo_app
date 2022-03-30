@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import axios from 'axios';
+import * as api from '../api/index';
 import Input from './Input';
 import ListTodo from './ListTodo';
 
@@ -7,7 +7,7 @@ const Todo = props => {
     const [todos, setTodos] = useState([]);
 
     const getTodos = () => {
-        axios.get('/api/todos')
+        api.getTodos()
             .then((response) => {
                 if (response.data)
                     setTodos(response.data);
@@ -18,10 +18,9 @@ const Todo = props => {
     };
 
     const deleteTodo = (id) => {
-        axios.delete(`/api/todos/${id}`)
+        api.deleteTodo(id)
             .then((response) => {
-                if (response.data)
-                    getTodos();
+                setTodos(todos.filter(todo => todo._id !== id));
             })
             .catch((error) => {
                 console.log(error);

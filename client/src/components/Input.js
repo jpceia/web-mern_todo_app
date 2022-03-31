@@ -1,21 +1,20 @@
-import React, { Component } from 'react';
+import React, { useState } from 'react';
 import * as api from '../api/index';
 
-class Input extends Component {
-    state = {
-        action: '',
-    };
 
-    addTodo = () => {
-        const task = { action: this.state.action };
+const Input = ({getTodos}) => {
+    const [state, setState ] = useState({ action: '' });
+
+    const addTodo = () => {
+        const task = { action: state.action };
 
         if (task.action && task.action.length > 0) {
             api.createTodo(task)
                 .then((response) => {
                     if (response.data)
                     {
-                        this.props.getTodos();
-                        this.setState({ action: '' });
+                        getTodos();
+                        setState({ action: '' });
                     }
                 })
                 .catch((error) => {
@@ -28,19 +27,16 @@ class Input extends Component {
         }
     };
 
-    handleChange = (event) => {
-        this.setState({ action: event.target.value });
-    };
-
-    render() {
-        let { action } = this.state;
-        return (
-            <div>
-                <input type="text" onChange={this.handleChange} value={action} />
-                <button onClick={this.addTodo}>Add</button>
-            </div>
-        );
-    };
+    return (
+        <div>
+            <input
+                type="text"
+                onChange={(e) => setState({ action: e.target.value })}
+                value={state.action}    
+            />
+            <button onClick={addTodo}>Add</button>
+        </div>
+    );
 }
 
 export default Input;

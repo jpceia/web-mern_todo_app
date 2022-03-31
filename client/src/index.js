@@ -11,13 +11,16 @@ import rootReducer from './reducers';
 
 const store = createStore(rootReducer);
 
-ReactDOM.render(
-  <React.StrictMode>
+const container = document.getElementById('root');
+
+// Create a root.
+const root = ReactDOM.createRoot(container);
+
+// Initial render
+root.render(
     <Provider store={store}>
-      <App />
+        <App />
     </Provider>
-  </React.StrictMode>,
-  document.getElementById('root')
 );
 
 // If you want to start measuring performance in your app, pass a function

@@ -1,6 +1,10 @@
 import React from 'react';
+import { deleteTodo } from '../actions/todos';
+import { useSelector } from 'react-redux';
 
-const ListTodo = ({ todos, deleteTodo }) => {
+const ListTodo = () => {
+    const todos = useSelector(state => state.todos);
+
     return (
         <ul>
             {todos && todos.length > 0 ? (

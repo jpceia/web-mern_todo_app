@@ -4,8 +4,15 @@ import { GET, POST, DELETE } from '../constants/actionTypes';
 export const createTodo = (task) => async (dispatch) => {
     try
     {
-        const { data } = await api.createTodo(task);
-        dispatch({ type: POST, payload: data}); 
+        if (task.action && task.action.length > 0)
+        {
+            const { data } = await api.createTodo(task);
+            dispatch({ type: POST, payload: data});
+        }
+        else
+        {
+            console.log('input field required');
+        }
     }
     catch (error)
     {

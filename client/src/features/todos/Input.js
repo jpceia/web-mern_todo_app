@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { createTodo } from './slice';
+import { addTodo } from './slice';
 
 
 const Input = () => {
@@ -10,7 +10,7 @@ const Input = () => {
     const onClick = (e) => {
         e.preventDefault();
         console.log("Creating todo: ", todo);
-        dispatch(createTodo({'action': todo}));
+        dispatch(addTodo({'action': todo}));
         setTodo('');
     };
 

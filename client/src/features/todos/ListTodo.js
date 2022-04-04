@@ -1,7 +1,7 @@
 import React from 'react';
 import { 
     selectTodos,
-    eraseTodo
+    deleteTodo
 } from './slice';
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -18,7 +18,7 @@ const ListTodo = () => {
                             {todo.action}
                             <button
                                 className="delete-btn"
-                                onClick={() => dispatch(eraseTodo(todo._id))}
+                                onClick={() => dispatch(deleteTodo(todo._id))}
                             >X</button>
                         </li>
                     );

@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import { getTodos } from './slice';
+import { fetchTodos } from './slice';
 import Input from './Input';
 import ListTodo from './ListTodo';
 
@@ -8,7 +8,7 @@ const Todo = () => {
     const dispatch = useDispatch();
     
     useEffect(() => {
-        dispatch(getTodos());
+        dispatch(fetchTodos());
     }, [dispatch]);
 
     return (

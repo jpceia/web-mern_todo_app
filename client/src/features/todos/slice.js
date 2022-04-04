@@ -49,6 +49,7 @@ export const todosSlice = createSlice({
 
 export const selectTodos = (state) => state.todos.items;
 export const selectTodo = (state, id) => state.todos.items.find(todo => todo._id === id);
+export const selectTodosStatus = (state) => state.todos.status; 
 
 export default todosSlice.reducer;
 

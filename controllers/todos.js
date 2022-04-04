@@ -2,7 +2,7 @@ import Todo from '../models/todo.js';
 
 export const getTodos = async (req, res) => {
     try {
-        const todos = await Todo.find({}, 'action');
+        const todos = await Todo.find({}, 'action date');
         res.status(200).send(todos);
     }
     catch (error) {

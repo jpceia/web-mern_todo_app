@@ -26,20 +26,20 @@ export const todosSlice = createSlice({
     reducers: {
     },
     extraReducers: builder => {
-        // Setup status
-        builder.addCase(fetchTodos.pending, (state, action) => {
-            state.status = 'loading';
-        });
-        builder.addCase(fetchTodos.fulfilled, (state, action) => {
-            state.items = action.payload;
-            state.status = 'succeeded';
-        });
-        builder.addCase(addTodo.fulfilled, (state, action) => {
-            state.items.push(action.payload);
-        });
-        builder.addCase(deleteTodo.fulfilled, (state, action) => {
-            state.items = state.items.filter(todo => todo._id !== action.payload._id);
-        });
+        builder
+            .addCase(fetchTodos.pending, (state, action) => {
+                state.status = 'loading';
+            })
+            .addCase(fetchTodos.fulfilled, (state, action) => {
+                state.items = action.payload;
+                state.status = 'succeeded';
+            })
+            .addCase(addTodo.fulfilled, (state, action) => {
+                state.items.push(action.payload);
+            })
+            .addCase(deleteTodo.fulfilled, (state, action) => {
+                state.items = state.items.filter(todo => todo._id !== action.payload._id);
+            })
     }
 });
 

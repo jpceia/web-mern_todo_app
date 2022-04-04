@@ -52,6 +52,19 @@ li {
   border-radius: 5px;
   overflow-wrap: break-word;
   cursor: pointer;
+  animation: fadeIn 0.5s 1;
+  animation-fill-mode: forwards;
+  -webkit-animation: fadeIn 0.5s 1;
+  -webkit-animation-fill-mode: forwards;
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
 }
 
 .delete-btn {

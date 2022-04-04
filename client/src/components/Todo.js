@@ -1,10 +1,15 @@
 import React, { useEffect } from 'react';
-import { getTodos } from '../api';
+import { useDispatch } from 'react-redux';
+import { getTodos } from '../features/todos/slice';
 import Input from './Input';
 import ListTodo from './ListTodo';
 
 const Todo = () => {
-    useEffect(getTodos, []);
+    const dispatch = useDispatch();
+    
+    useEffect(() => {
+        dispatch(getTodos());
+    }, [dispatch]);
 
     return (
         <div>

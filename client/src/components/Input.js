@@ -1,22 +1,25 @@
 import React, { useState } from 'react';
-import { createTodo } from '../actions/todos';
+import { useDispatch } from 'react-redux';
+import { createTodo } from '../features/todos/slice';
 
 
 const Input = () => {
-    const [state, setState ] = useState({ action: '' });
+    const dispatch = useDispatch();
+    const [todo, setTodo ] = useState('');
 
     const onClick = (e) => {
         e.preventDefault();
-        createTodo(state.action);
-        setState({ action: '' });
+        console.log("Creating todo: ", todo);
+        dispatch(createTodo({'action': todo}));
+        setTodo('');
     };
 
     return (
         <div>
             <input
                 type="text"
-                onChange={(e) => setState({ action: e.target.value })}
-                value={state.action}
+                onChange={(e) => setTodo(e.target.value)}
+                value={todo}
             />
             <button onClick={onClick}>Add</button>
         </div>

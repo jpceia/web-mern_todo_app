@@ -7,6 +7,10 @@ import { config } from 'dotenv';
 
 const __dirname = path.resolve();
 
+// https://jasonwatmore.com/post/2020/03/02/react-hooks-redux-user-registration-and-login-tutorial-example
+// https://medium.com/dailyjs/mern-stack-implementing-sign-in-with-google-made-easy-9bfdfe00d21c
+// https://devcenter.heroku.com/articles/config-vars
+
 config();
 
 const app = express();

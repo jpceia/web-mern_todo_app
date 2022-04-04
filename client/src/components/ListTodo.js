@@ -1,9 +1,13 @@
 import React from 'react';
-import { deleteTodo } from '../actions/todos';
-import { useSelector } from 'react-redux';
+import { 
+    selectTodos,
+    eraseTodo
+} from '../features/todos/slice';
+import { useDispatch, useSelector } from 'react-redux';
 
 const ListTodo = () => {
-    const todos = useSelector(state => state.todos);
+    const dispatch = useDispatch();
+    const todos = useSelector(selectTodos);
 
     return (
         <ul>
@@ -14,7 +18,7 @@ const ListTodo = () => {
                             {todo.action}
                             <button
                                 className="delete-btn"
-                                onClick={() => deleteTodo(todo._id)}
+                                onClick={() => dispatch(eraseTodo(todo._id))}
                             >X</button>
                         </li>
                     );

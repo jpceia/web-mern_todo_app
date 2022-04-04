@@ -1,7 +1,12 @@
 import * as api from './api';
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 
+function sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
+
 export const fetchTodos = createAsyncThunk('todos/fetchTodos', async () => {
+    await sleep(1000);
     const { data } = await api.getTodos();
     return data;
 });

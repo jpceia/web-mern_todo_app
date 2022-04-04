@@ -30,6 +30,10 @@ export const todosSlice = createSlice({
             .addCase(fetchTodos.pending, (state, action) => {
                 state.status = 'loading';
             })
+            .addCase(fetchTodos.rejected, (state, action) => {
+                state.status = 'failed';
+                state.error = action.error.message;
+            })
             .addCase(fetchTodos.fulfilled, (state, action) => {
                 state.items = action.payload;
                 state.status = 'succeeded';

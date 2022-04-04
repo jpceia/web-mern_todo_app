@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import { getTodos } from '../features/todos/slice';
+import { getTodos } from './slice';
 import Input from './Input';
 import ListTodo from './ListTodo';
 

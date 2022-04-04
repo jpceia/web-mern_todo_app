@@ -2,7 +2,7 @@ import React from 'react';
 import { 
     selectTodos,
     eraseTodo
-} from '../features/todos/slice';
+} from './slice';
 import { useDispatch, useSelector } from 'react-redux';
 
 const ListTodo = () => {

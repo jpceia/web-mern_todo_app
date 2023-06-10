@@ -17,7 +17,8 @@ export const addTodo = createAsyncThunk('todos/addTodo', async task => {
 });
 
 export const deleteTodo = createAsyncThunk('todos/deleteTodo', async id => {
-    const { data } = await api.deleteTodo(id);
+    await api.deleteTodo(id);
+    const data = { id };
     return data;
 });
 
@@ -47,13 +48,13 @@ export const todosSlice = createSlice({
                 state.items.push(action.payload);
             })
             .addCase(deleteTodo.fulfilled, (state, action) => {
-                state.items = state.items.filter(todo => todo._id !== action.payload._id);
+                state.items = state.items.filter(todo => todo.id !== action.payload.id);
             })
     }
 });
 
 export const selectTodos = (state) => state.todos.items;
-export const selectTodo = (state, id) => state.todos.items.find(todo => todo._id === id);
+export const selectTodo = (state, id) => state.todos.items.find(todo => todo.id === id);
 export const selectTodosStatus = (state) => state.todos.status; 
 
 export default todosSlice.reducer;

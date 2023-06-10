@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchTodos, selectTodosStatus } from './slice';
+import { fetchTodos, selectTodosStatus } from '../reducers/todoReducer';
 import Input from './Input';
 import ListTodo from './ListTodo';
 

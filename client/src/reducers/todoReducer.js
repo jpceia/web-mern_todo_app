@@ -1,4 +1,4 @@
-import * as api from './api';
+import * as api from '../api/todoApi';
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 
 function sleep(ms) {

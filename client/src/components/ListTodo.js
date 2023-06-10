@@ -2,7 +2,7 @@ import React from 'react';
 import { 
     selectTodos,
     deleteTodo
-} from './slice';
+} from '../reducers/todoReducer';
 import TodoItem from './TodoItem';
 import { useDispatch, useSelector } from 'react-redux';
 

@@ -1,8 +1,11 @@
-import Todo from '../models/todo.js';
+import { AppDataSource } from "../datasource.js";
+import Todo from "../entities/todo.js";
+
 
 export const getTodos = async (req, res) => {
+    const todoRepository = AppDataSource.getRepository(Todo);
     try {
-        const todos = await Todo.find({}, 'action date');
+        const todos = await todoRepository.find();
         res.status(200).send(todos);
     }
     catch (error) {
@@ -11,8 +14,16 @@ export const getTodos = async (req, res) => {
 };
 
 export const createTodo = async (req, res) => {
+    const todoRepository = AppDataSource.getRepository(Todo);
     try {
-        const todo = await Todo.create(req.body);
+        const action = req.body.action;
+        if (!action)
+            throw new Error("Action is required");
+        const body = {
+            action,
+            date: new Date()
+        }
+        const todo = await todoRepository.save(body);
         res.status(200).send(todo);
     }
     catch (error) {
@@ -21,8 +32,9 @@ export const createTodo = async (req, res) => {
 };
 
 export const deleteTodo = async (req, res) => {
+    const todoRepository = AppDataSource.getRepository(Todo);
     try {
-        const todo = await Todo.findByIdAndRemove({ _id: req.params.id });
+        const todo = await todoRepository.delete(req.params.id);
         res.status(200).send(todo);
     }
     catch (error) {

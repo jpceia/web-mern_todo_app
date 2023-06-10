@@ -1,10 +1,9 @@
 import express from 'express';
 import bodyParser from 'body-parser';
-import mongoose from 'mongoose';
 import routes from './routes/api.js';
 import path from 'path';
 import { config } from 'dotenv';
-
+import { AppDataSource } from "./datasource.js";
 const __dirname = path.resolve();
 
 // https://jasonwatmore.com/post/2020/03/02/react-hooks-redux-user-registration-and-login-tutorial-example
@@ -16,17 +15,15 @@ config();
 const app = express();
 const port = process.env.PORT || 5000;
 
-// Connect to the database
-mongoose
-    .connect(process.env.DB, {
-        useNewUrlParser: true,
-        // useUnifiedTopology: true,
+// establish database connection
+AppDataSource
+    .initialize()
+    .then(() => {
+        console.log("Data Source has been initialized!")
     })
-    .then(() => console.log('Database connected successfully'))
-    .catch((err) => console.log(err));
-
-// Since mongoose's Promise is deprecated, we override it with Node's Promise
-mongoose.Promise = global.Promise;
+    .catch((err) => {
+        console.error("Error during Data Source initialization:", err)
+    })
 
 // Middleware
 app.use((req, res, next) => {

@@ -26,7 +26,7 @@ const ListTodo = () => {
                 return <TodoItem
                     todo={todo}
                     key={todo.id}
-                    onDelete = {() => dispatch(deleteTodo(todo._id))}
+                    onDelete = {() => dispatch(deleteTodo(todo.id))}
                 />
             })}
         </ul>

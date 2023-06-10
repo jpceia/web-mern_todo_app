@@ -15,7 +15,7 @@ const Todo = () => {
     const renderTodoList = (status) => {
         switch (status) {
             case 'loading':
-                return <p class="loader">Loading...</p>;
+                return <p className="loader">Loading...</p>;
             case 'failed':
                 return <p>Failed to load todos. Please try again later.</p>;
             case 'succeeded':

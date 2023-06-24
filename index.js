@@ -1,6 +1,6 @@
 import express from 'express';
 import bodyParser from 'body-parser';
-import { todosRoutes, authRoutes } from './routes/index.js';
+import { expenseRoutes, authRoutes } from './routes/index.js';
 import path from 'path';
 import session from 'express-session';
 import passport from 'passport';
@@ -45,7 +45,7 @@ app.use(session({
         sameSite: "lax", // csrf
         secure: __prod__ // this should be true only when you don't want to show it for security reason
     }
-  }));
+}));
 
 
 app.use(passport.initialize());
@@ -58,7 +58,7 @@ app.get("/", (req, res) => {
 });
 
 // API routes
-app.use('/api/todos', todosRoutes);
+app.use('/api/expense', expenseRoutes);
 app.use('/auth', authRoutes);
 
 app.use((err, req, res, next) => {

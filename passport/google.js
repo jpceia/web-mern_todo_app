@@ -19,10 +19,8 @@ const verify = async(
     // find or add user to database
     const userRepository = AppDataSource.getRepository(User);
     const foundUser = await userRepository.findOneBy({
-        
-            provider: profile.provider,
-            providerId: profile.id
-        
+        provider: profile.provider,
+        providerId: profile.id
     });
     if (foundUser) {
         return done(null, foundUser);
@@ -31,7 +29,8 @@ const verify = async(
         provider: profile.provider,
         providerId: profile.id,
         name: profile.displayName,
-        email: profile.emails[0].value
+        email: profile.emails[0]?.value,
+        profileImg: profile.photos[0]?.value
     });
     return done(null, newUser);
 }

@@ -2,12 +2,12 @@ import { EntitySchema } from "typeorm"
 
 export default new EntitySchema({
     name: "User",
-    tableName: "user",
+    tableName: "users",
     columns: {
         id: {
             primary: true,
-            type: "int",
-            generated: true,
+            generated: "uuid",
+            type: "uuid"
         },
         provider: {
             type: "enum",
@@ -25,6 +25,9 @@ export default new EntitySchema({
             }
         },
         name: {
+            type: "varchar"
+        },
+        profileImg: {
             type: "varchar"
         }
     }

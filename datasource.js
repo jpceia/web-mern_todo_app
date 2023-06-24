@@ -1,5 +1,5 @@
 import { DataSource } from "typeorm";
-import Todo from "./entities/todo.js";
+import Expense from "./entities/expense.js";
 import User from "./entities/user.js";
 import { DB_HOST, DB_USERNAME, DB_PASSWORD, DATABASE} from './constants.js';
 
@@ -12,7 +12,7 @@ const AppDataSource = new DataSource({
     database: DATABASE,
     synchronize: false,
     logging: true,
-    entities: [Todo, User],
+    entities: [Expense, User],
     subscribers: [],
     migrations: [],
     extra: {

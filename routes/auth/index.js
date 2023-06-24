@@ -6,6 +6,7 @@ const router = Router();
 
 router.get('/logout', (req, res) => {
   req.logout();
+  req.session = null;
   console.log("Logging out...");
   res.send(req.user);   
 });

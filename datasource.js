@@ -1,19 +1,18 @@
 import { DataSource } from "typeorm";
 import Todo from "./entities/todo.js";
-import { config } from 'dotenv';
-config();
-
+import User from "./entities/user.js";
+import { DB_HOST, DB_USERNAME, DB_PASSWORD, DATABASE} from './constants.js';
 
 const AppDataSource = new DataSource({
     type: "mysql",
-    host: process.env.DB_HOST,
+    host: DB_HOST,
     //port: 5432,
-    username: process.env.DB_USERNAME,
-    password: process.env.DB_PASSWORD,
-    database: process.env.DATABASE,
+    username: DB_USERNAME,
+    password: DB_PASSWORD,
+    database: DATABASE,
     synchronize: false,
     logging: true,
-    entities: [Todo],
+    entities: [Todo, User],
     subscribers: [],
     migrations: [],
     extra: {

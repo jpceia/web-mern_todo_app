@@ -1,19 +1,20 @@
 import express from 'express';
 import bodyParser from 'body-parser';
-import routes from './routes/api.js';
+import { todosRoutes, authRoutes } from './routes/index.js';
 import path from 'path';
-import { config } from 'dotenv';
+import session from 'express-session';
+import passport from 'passport';
+import './passport/index.js';
 import { AppDataSource } from "./datasource.js";
+import { PORT, SESSION_SECRET, __prod__ } from './constants.js';
 const __dirname = path.resolve();
 
 // https://jasonwatmore.com/post/2020/03/02/react-hooks-redux-user-registration-and-login-tutorial-example
 // https://medium.com/dailyjs/mern-stack-implementing-sign-in-with-google-made-easy-9bfdfe00d21c
 // https://devcenter.heroku.com/articles/config-vars
 
-config();
-
 const app = express();
-const port = process.env.PORT || 5000;
+const port = PORT || 5000;
 
 // establish database connection
 AppDataSource
@@ -33,6 +34,23 @@ app.use((req, res, next) => {
 });
 app.use(bodyParser.json());
 
+app.use(session({
+    secret: SESSION_SECRET,
+    resave: true,
+    saveUninitialized: true, // false ?
+    rolling: true, // forces resetting of max age
+    cookie: {
+        maxAge: 10 * 365 * 24 * 60 * 60 * 100, // 10 years
+        httpOnly: true,
+        sameSite: "lax", // csrf
+        secure: __prod__ // this should be true only when you don't want to show it for security reason
+    }
+  }));
+
+
+app.use(passport.initialize());
+app.use(passport.session());
+
 // Serve static assets if in production
 app.use(express.static(path.resolve(__dirname, "./client/build")));
 app.get("/", (req, res) => {
@@ -40,11 +58,17 @@ app.get("/", (req, res) => {
 });
 
 // API routes
-app.use('/api', routes);
+app.use('/api/todos', todosRoutes);
+app.use('/auth', authRoutes);
 
 app.use((err, req, res, next) => {
     console.log(err);
     next();
+});
+
+//The 404 Route (ALWAYS Keep this as the last route)
+app.get('*', (req, res) => {
+    res.status(404).send('what???');
 });
 
 app.listen(port, () => {

@@ -6,7 +6,9 @@ import session from 'express-session';
 import passport from 'passport';
 import './passport';
 import { AppDataSource } from "./datasource";
+import { Session } from "./entities/session";
 import { PORT, SESSION_SECRET, __prod__ } from './constants';
+import { TypeormStore } from 'connect-typeorm';
 // const __dirname = path.resolve();
 
 // https://jasonwatmore.com/post/2020/03/02/react-hooks-redux-user-registration-and-login-tutorial-example
@@ -44,7 +46,12 @@ app.use(session({
         httpOnly: true,
         sameSite: "lax", // csrf
         secure: __prod__ // this should be true only when you don't want to show it for security reason
-    }
+    },
+    store: new TypeormStore({
+        cleanupLimit: 2,
+        limitSubquery: false,
+        ttl: 10 * 365 * 24 * 60 * 60 * 100, // 10 years
+    }).connect(AppDataSource.getRepository(Session))
 }));
 
 

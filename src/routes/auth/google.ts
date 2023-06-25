@@ -4,10 +4,15 @@ import passport from "passport";
 
 const router = Router();
 
-router.get('/', passport.authenticate('google', {
-  scope: ['profile', 'email'],
-  prompt: 'select_account'
-}));
+router.get('/',
+  passport.authenticate('google', {
+    scope: ['profile', 'email'],
+    prompt: 'select_account'
+  }, (req, res) => {
+    console.log("Logging in...");
+    res.send(req.user);
+  })
+);
 
 router.get('/success', (req, res) => {
   res.send("You have successfully logged in");
@@ -22,11 +27,10 @@ router.get('/callback',
     successRedirect: '/auth/google/success',
     failureRedirect: '/auth/google/failure',
     failureMessage: 'Failed to authenticate'
-  }),
-  (req, res) => {
+  }, (req, res) => {
     res.send(req.user);
     res.send('You reached the redirect URI');
-  }
+  })
 );
 
 export default router;

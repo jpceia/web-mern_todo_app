@@ -59,7 +59,7 @@ export const deleteExpense = async (req, res) => {
     try {
         const expense = await expenseRepository.delete({
             id: req.params.id,
-            user: req.user.id
+            userId: req.user.id
         });
         res.status(200).send(expense);
     }

@@ -10,6 +10,10 @@
 
 # production
 /build
+/built
+
+# client
+/client
 
 # misc
 .DS_Store

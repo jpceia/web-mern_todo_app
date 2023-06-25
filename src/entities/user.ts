@@ -20,9 +20,6 @@ export default new EntitySchema({
         email: {
             type: "varchar",
             unique: true,
-            validate: {
-                isEmail: true
-            }
         },
         name: {
             type: "varchar"

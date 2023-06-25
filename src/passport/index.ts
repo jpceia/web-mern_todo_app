@@ -1,6 +1,6 @@
-import googleStrategy from "./google.js";
-import { AppDataSource } from "../datasource.js";
-import User from "../entities/user.js";
+import googleStrategy from "./google";
+import { AppDataSource } from "../datasource";
+import User from "../entities/user";
 import passport from "passport";
 
 

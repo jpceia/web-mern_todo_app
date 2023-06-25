@@ -1,13 +1,13 @@
 import express from 'express';
 import bodyParser from 'body-parser';
-import { expenseRoutes, authRoutes } from './routes/index.js';
+import { expenseRoutes, authRoutes } from './routes';
 import path from 'path';
 import session from 'express-session';
 import passport from 'passport';
-import './passport/index.js';
-import { AppDataSource } from "./datasource.js";
-import { PORT, SESSION_SECRET, __prod__ } from './constants.js';
-const __dirname = path.resolve();
+import './passport';
+import { AppDataSource } from "./datasource";
+import { PORT, SESSION_SECRET, __prod__ } from './constants';
+// const __dirname = path.resolve();
 
 // https://jasonwatmore.com/post/2020/03/02/react-hooks-redux-user-registration-and-login-tutorial-example
 // https://medium.com/dailyjs/mern-stack-implementing-sign-in-with-google-made-easy-9bfdfe00d21c
@@ -61,7 +61,7 @@ app.get("/", (req, res) => {
 app.use('/api/expense', expenseRoutes);
 app.use('/auth', authRoutes);
 
-app.use((err, req, res, next) => {
+app.use((err, _req, _res, next) => {
     console.log(err);
     next();
 });

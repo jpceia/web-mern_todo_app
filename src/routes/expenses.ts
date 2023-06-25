@@ -1,6 +1,6 @@
 import { Router } from 'express';
-import { createExpense, getExpenses, getExpense, deleteExpense } from '../controllers/expense.js';
-import isAuthenticated from '../middleware/isAuthenticated.js';
+import { createExpense, getExpenses, getExpense, deleteExpense } from '../controllers/expense';
+import isAuthenticated from '../middleware/isAuthenticated';
 
 const routes = Router();
 routes.get('/', isAuthenticated, getExpenses);

@@ -1,4 +1,4 @@
-import authRoutes from "./auth/index.js";
-import expenseRoutes from "./expenses.js";
+import authRoutes from "./auth";
+import expenseRoutes from "./expenses";
 
 export { authRoutes, expenseRoutes };

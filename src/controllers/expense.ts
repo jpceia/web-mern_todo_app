@@ -1,5 +1,5 @@
-import { AppDataSource } from "../datasource.js";
-import Expense from "../entities/expense.js";
+import { AppDataSource } from "../datasource";
+import Expense from "../entities/expense";
 
 
 export const getExpenses = async (req, res) => {

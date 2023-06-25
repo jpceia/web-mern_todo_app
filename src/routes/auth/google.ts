@@ -27,9 +27,6 @@ router.get('/callback',
     successRedirect: '/auth/google/success',
     failureRedirect: '/auth/google/failure',
     failureMessage: 'Failed to authenticate'
-  }, (req, res) => {
-    res.send(req.user);
-    res.send('You reached the redirect URI');
   })
 );
 

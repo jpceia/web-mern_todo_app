@@ -39,9 +39,10 @@ export const createExpense = async (req, res) => {
         if (!category)
             throw new Error("category is required");
         const description = req.body.description;
+        const date = req.body.date ? new Date(req.body.date) : new Date();
         const body = {
             userId: req.user.id,
-            date: new Date(),
+            date,
             category,
             value,
             description,

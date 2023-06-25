@@ -1,4 +1,4 @@
-import { Column, Entity, EntitySchema, PrimaryGeneratedColumn } from "typeorm"
+import { Column, CreateDateColumn, Entity, EntitySchema, PrimaryGeneratedColumn } from "typeorm"
 
 @Entity('expenses')
 export class Expense {
@@ -7,6 +7,9 @@ export class Expense {
 
     @Column()
     userId: string;
+
+    @CreateDateColumn()
+    createDate: Date;
 
     @Column()
     date: Date;

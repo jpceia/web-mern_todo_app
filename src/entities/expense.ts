@@ -1,29 +1,22 @@
-import { EntitySchema } from "typeorm"
+import { Column, Entity, EntitySchema, PrimaryGeneratedColumn } from "typeorm"
 
-export default new EntitySchema({
-    name: "Expense",
-    tableName: "expenses",
-    columns: {
-        id: {
-            primary: true,
-            generated: "uuid",
-            type: "uuid"
-        },
-        userId: {
-            type: "uuid"
-        },
-        date: {
-            type: "datetime"
-        },
-        category: {
-            type: "varchar"
-        },
-        value: {
-            type: "decimal",
-        },
-        description: {
-            type: "varchar",
-            nullable: true
-        }
-    }
-});
+@Entity('expenses')
+export class Expense {
+    @PrimaryGeneratedColumn('uuid')
+    id: string;
+
+    @Column()
+    userId: string;
+
+    @Column()
+    date: Date;
+
+    @Column()
+    category: string;
+
+    @Column()
+    value: number;
+
+    @Column({ nullable: true })
+    description: string;
+}

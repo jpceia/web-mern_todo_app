@@ -1,7 +1,7 @@
 import { Strategy as GoogleStrategy } from "passport-google-oauth20";
 import { GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET } from '../constants';
 import { AppDataSource } from "../datasource";
-import User from "../entities/user";
+import { User } from "../entities/user";
 
 const config = {
     clientID: GOOGLE_CLIENT_ID,

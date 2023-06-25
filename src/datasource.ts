@@ -1,6 +1,6 @@
 import { DataSource } from "typeorm";
-import Expense from "./entities/expense";
-import User from "./entities/user";
+import { Expense } from "./entities/expense";
+import { User } from "./entities/user";
 import { DB_HOST, DB_USERNAME, DB_PASSWORD, DB_NAME } from './constants';
 
 const AppDataSource = new DataSource({

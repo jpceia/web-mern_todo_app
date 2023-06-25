@@ -1,31 +1,32 @@
-import { EntitySchema } from "typeorm"
+import { Column, Entity, EntitySchema, PrimaryGeneratedColumn } from "typeorm"
 
-export default new EntitySchema({
-    name: "User",
-    tableName: "users",
-    columns: {
-        id: {
-            primary: true,
-            generated: "uuid",
-            type: "uuid"
-        },
-        provider: {
-            type: "enum",
-            enum: ["google", ""],
-            default: ""
-        },
-        providerId: {
-            type: "varchar",
-        },
-        email: {
-            type: "varchar",
-            unique: true,
-        },
-        name: {
-            type: "varchar"
-        },
-        profileImg: {
-            type: "varchar"
-        }
-    }
-});
+enum ProviderType {
+    GOOGLE = 'google',
+    FACEBOOK = 'facebook',
+    DEFAULT = ''
+}
+
+@Entity('users')
+export class User {
+    @PrimaryGeneratedColumn('uuid')
+    id: string;
+
+    @Column({
+        type: 'enum',
+        enum: ProviderType,
+        default: ProviderType.DEFAULT
+    })
+    provider: ProviderType;
+
+    @Column()
+    providerId: string;
+
+    @Column()
+    email: string;
+
+    @Column()
+    name: string;
+
+    @Column()
+    profileImg: string;
+}

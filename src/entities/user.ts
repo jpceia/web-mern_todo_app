@@ -1,4 +1,4 @@
-import { Column, Entity, EntitySchema, PrimaryGeneratedColumn } from "typeorm"
+import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
 
 export enum ProviderType {
     GOOGLE = 'google',

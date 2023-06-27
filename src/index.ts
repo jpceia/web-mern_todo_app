@@ -1,6 +1,6 @@
 import express, { NextFunction, Request, Response } from 'express';
 import bodyParser from 'body-parser';
-import { expenseRoutes, authRoutes } from './routes';
+import { expenseRoutes, authRoutes, meRoutes } from './routes';
 import path from 'path';
 import session from 'express-session';
 import passport from 'passport';
@@ -66,6 +66,7 @@ app.get("/", (_req: Request, res: Response) => {
 
 // API routes
 app.use('/api/expense', expenseRoutes);
+app.use('/api/me', meRoutes);
 app.use('/auth', authRoutes);
 
 app.use((err, _req: Request, _res: Response, next: NextFunction) => {

@@ -1,7 +1,4 @@
 import { DataSource } from "typeorm";
-import { Expense } from "./entities/expense";
-import { User } from "./entities/user";
-import { Session } from "./entities/session";
 import { DB_HOST, DB_USERNAME, DB_PASSWORD, DB_NAME } from './constants';
 
 const AppDataSource = new DataSource({
@@ -13,7 +10,7 @@ const AppDataSource = new DataSource({
     database: DB_NAME,
     synchronize: false,
     logging: true,
-    entities: [Expense, User, Session],
+    entities: ["src/entities/**/*.ts"],
     subscribers: [],
     migrations: [],
     extra: {

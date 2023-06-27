@@ -1,5 +1,6 @@
-import { Router } from "express";
+import { Request, Response, Router } from "express";
 import passport from "passport";
+import { CLIENT_URL } from "../../constants";
 
 
 const router = Router();
@@ -24,7 +25,7 @@ router.get('/failure', (_req: Request, res: Response) => {
 
 router.get('/callback',
   passport.authenticate('google', {
-    successRedirect: '/auth/google/success',
+    successRedirect: CLIENT_URL,
     failureRedirect: '/auth/google/failure',
     failureMessage: 'Failed to authenticate'
   })

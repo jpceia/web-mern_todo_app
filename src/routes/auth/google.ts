@@ -14,11 +14,11 @@ router.get('/',
   })
 );
 
-router.get('/success', (req, res) => {
+router.get('/success', (_req: Request, res: Response) => {
   res.send("You have successfully logged in");
 });
 
-router.get('/failure', (req, res) => {
+router.get('/failure', (_req: Request, res: Response) => {
   res.send("You have failed to log in");
 });
 

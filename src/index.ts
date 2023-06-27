@@ -1,14 +1,14 @@
-import express from 'express';
+import express, { NextFunction, Request, Response } from 'express';
 import bodyParser from 'body-parser';
 import { expenseRoutes, authRoutes } from './routes';
 import path from 'path';
 import session from 'express-session';
 import passport from 'passport';
-import './passport';
 import { AppDataSource } from "./datasource";
 import { Session } from "./entities/session";
 import { PORT, SESSION_SECRET, __prod__ } from './constants';
 import { TypeormStore } from 'connect-typeorm';
+import './auth';
 // const __dirname = path.resolve();
 
 // https://jasonwatmore.com/post/2020/03/02/react-hooks-redux-user-registration-and-login-tutorial-example
@@ -29,7 +29,7 @@ AppDataSource
     })
 
 // Middleware
-app.use((req, res, next) => {
+app.use((_req: Request, res: Response, next: NextFunction) => {
     res.header("Access-Control-Allow-Origin", "*");
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
     next();
@@ -60,7 +60,7 @@ app.use(passport.session());
 
 // Serve static assets if in production
 app.use(express.static(path.resolve(__dirname, "./client/build")));
-app.get("/", (req, res) => {
+app.get("/", (_req: Request, res: Response) => {
     res.sendFile(path.resolve(__dirname, "./client/build", "index.html"));
 });
 
@@ -68,13 +68,13 @@ app.get("/", (req, res) => {
 app.use('/api/expense', expenseRoutes);
 app.use('/auth', authRoutes);
 
-app.use((err, _req, _res, next) => {
+app.use((err, _req: Request, _res: Response, next: NextFunction) => {
     console.log(err);
     next();
 });
 
 //The 404 Route (ALWAYS Keep this as the last route)
-app.get('*', (req, res) => {
+app.get('*', (_req: Request, res: Response) => {
     res.status(404).send('what???');
 });
 

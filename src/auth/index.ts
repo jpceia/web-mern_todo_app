@@ -4,9 +4,8 @@ import { User } from "../entities/user";
 import passport from "passport";
 
 
-
-passport.serializeUser((user: any, done) => {
-    done(null, user.id);
+passport.serializeUser((user: Express.User, done) => {
+    done(null, (user as User).id);
 });
 
 passport.deserializeUser(async (id: string, done) => {

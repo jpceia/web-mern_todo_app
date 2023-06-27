@@ -1,6 +1,6 @@
 import { Column, Entity, EntitySchema, PrimaryGeneratedColumn } from "typeorm"
 
-enum ProviderType {
+export enum ProviderType {
     GOOGLE = 'google',
     FACEBOOK = 'facebook',
     DEFAULT = ''

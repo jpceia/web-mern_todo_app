@@ -1,11 +1,14 @@
+import { Request, Response } from "express";
 import { AppDataSource } from "../datasource";
 import { Expense } from "../entities/expense";
+import { User } from "../entities/user";
 
 
-export const getExpenses = async (req, res) => {
+export const getExpenses = async (req: Request, res: Response) => {
     const expenseRepository = AppDataSource.getRepository(Expense);
     try {
-        const expenses = await expenseRepository.findBy({ userId: req.user.id });
+        const user = req.user as User;
+        const expenses = await expenseRepository.findBy({ userId: user.id });
         res.status(200).send(expenses);
     }
     catch (error) {
@@ -13,13 +16,21 @@ export const getExpenses = async (req, res) => {
     }
 };
 
-export const getExpense = async (req, res) => {
+
+interface IGetExpenseRequest extends Request  {
+    params: {
+        id: string;
+    }
+  }
+
+export const getExpense = async (req: IGetExpenseRequest, res: Response) => {
     const expenseRepository = AppDataSource.getRepository(Expense);
     try {
+        const user = req.user as User;
         const expense = await expenseRepository.findOneOrFail({
             where: {
                 id: req.params.id,
-                userId: req.user.id
+                userId: user.id
             }
         });
         res.status(200).send(expense);
@@ -29,9 +40,19 @@ export const getExpense = async (req, res) => {
     }
 };
 
-export const createExpense = async (req, res) => {
+interface ICreateExpenseRequest extends Request {
+    body: {
+        value: number;
+        category: string;
+        description?: string;
+        date?: string;
+    }
+}
+
+export const createExpense = async (req: ICreateExpenseRequest, res: Response) => {
     const expenseRepository = AppDataSource.getRepository(Expense);
     try {
+        const user = req.user as User;
         const value = req.body.value;
         if (!value)
             throw new Error("value is required");
@@ -41,7 +62,7 @@ export const createExpense = async (req, res) => {
         const description = req.body.description;
         const date = req.body.date ? new Date(req.body.date) : new Date();
         const body = {
-            userId: req.user.id,
+            userId: user.id,
             date,
             category,
             value,
@@ -55,12 +76,19 @@ export const createExpense = async (req, res) => {
     }
 };
 
-export const deleteExpense = async (req, res) => {
+interface IDeleteExpenseRequest extends Request {
+    params: {
+        id: string;
+    }
+}
+
+export const deleteExpense = async (req: IDeleteExpenseRequest, res: Response) => {
     const expenseRepository = AppDataSource.getRepository(Expense);
+    const user = req.user as User;
     try {
         const expense = await expenseRepository.delete({
             id: req.params.id,
-            userId: req.user.id
+            userId: user.id
         });
         res.status(200).send(expense);
     }

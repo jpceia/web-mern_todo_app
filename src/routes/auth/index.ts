@@ -1,10 +1,10 @@
-import { Router } from "express";
+import { Request, Response, Router } from "express";
 import googleRoutes from "./google";
 
 
 const router = Router();
 
-router.get('/logout', (req, res) => {
+router.get('/logout', (req: Request, res: Response) => {
   // req.logout();
   req.session.destroy(() => {
     console.log("Logging out...");

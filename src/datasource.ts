@@ -10,12 +10,12 @@ const AppDataSource = new DataSource({
     database: DB_NAME,
     synchronize: false,
     logging: true,
-    entities: ["src/entities/**/*.ts"],
+    entities: [__dirname + "/entities/**/*.ts"],
+    migrations: [__dirname + "/migrations/**/*.ts"],
     subscribers: [],
-    migrations: [],
     extra: {
         ssl: {"rejectUnauthorized":true}
     }
-})
+});
 
 export { AppDataSource }

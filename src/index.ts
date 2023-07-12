@@ -8,6 +8,7 @@ import { AppDataSource } from "./datasource";
 import { Session } from "./entities/session";
 import { PORT, SESSION_SECRET, __prod__ } from './constants';
 import { TypeormStore } from 'connect-typeorm';
+import cors from 'cors';
 import './auth';
 // const __dirname = path.resolve();
 
@@ -28,9 +29,16 @@ AppDataSource
         console.error("Error during Data Source initialization:", err)
     })
 
+app.use(
+    cors({
+        origin: "http://localhost:3000",
+        credentials: true,
+    })
+);
+
 // Middleware
 app.use((_req: Request, res: Response, next: NextFunction) => {
-    res.header("Access-Control-Allow-Origin", "*");
+    // res.header("Access-Control-Allow-Origin", "http://localhost:3000"); // update to match the domain you will make the request from
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
     next();
 });

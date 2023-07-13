@@ -6,20 +6,20 @@ const timeDistance = (date) => {
     return distance;
 };
 
-const TodoItem = ({ todo, onDelete }) => {
+const ExpenseItem = ({ expense, onDelete }) => {
     return (
         <li>
             <div>
-                {todo.action}
+                {expense.action}
                 <button
                     className="delete-btn"
                     onClick={onDelete}
                 >❌</button>
                 <br/>
-                <small style={{fontSize: "0.5em"}}>Created {timeDistance(todo.date)} ago.</small>
+                <small style={{fontSize: "0.5em"}}>Created {timeDistance(expense.date)} ago.</small>
             </div>
         </li>
     );
 }
 
-export default TodoItem;
+export default ExpenseItem;

@@ -1,8 +1,8 @@
 import { configureStore } from '@reduxjs/toolkit';
-import todosReducer from './reducers/todoReducer';
+import expensesReducer from './reducers/expensesReducer';
 
 export const store = configureStore({
     reducer: {
-        todos: todosReducer
+        expenses: expensesReducer
     },
 });

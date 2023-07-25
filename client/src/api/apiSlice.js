@@ -33,10 +33,12 @@ export const apiSlice = createApi({
                 url: `/expense/${id}`,
                 credentials: 'include',
                 method: 'DELETE'
-            })
+            }),
+            invalidatesTags: ['Expense']
         }),
         getMe: builder.query({
-            query: () => '/me'
+            query: () => '/me',
+            providesTags: ['Me']
         })
     })
 })

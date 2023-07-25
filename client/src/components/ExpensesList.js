@@ -1,7 +1,7 @@
 import { format } from 'date-fns';
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
-import { useDeleteExpenseMutation } from '../api/apiSlice';
+import { useDeleteExpenseMutation, useGetExpensesQuery } from '../api/apiSlice';
 
 const Table = styled.table`
     width: 100%;
@@ -57,7 +57,28 @@ const ExpensesListRow = ({ expense, isEven }) => {
     );
 }
 
-const ExpensesList = ({ expenses }) => {
+const ExpensesList = () => {
+    const [page, setPage] = useState(1);
+    const {
+        data: expenses,
+        isLoading,
+        isSuccess,
+        isError,
+        error
+    } = useGetExpensesQuery(page);
+
+    if (isLoading)
+        return <div style={{
+            textAlign: 'center',
+            fontSize: '2em',
+            marginTop: '50px'
+        }}>Loading...</div>;
+
+    if (isError)
+        return <div>{error}</div>;
+
+    if (!isSuccess)
+        return null;
 
     return (
         <Table>
@@ -71,7 +92,7 @@ const ExpensesList = ({ expenses }) => {
                 </tr>
             </thead>
             <tbody>
-                {expenses.map((expense, index) => (
+                {expenses.data.map((expense, index) => (
                     <ExpensesListRow
                         key={index}
                         expense={expense}

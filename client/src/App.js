@@ -6,7 +6,6 @@ import ProtectedRoute from './shared/ProtectedRoute';
 import ExpenseForm from './components/ExpenseForm';
 import ExpensesList from './components/ExpensesList';
 import Container from './components/Container';
-import { useGetExpensesQuery } from './api/apiSlice';
 
 const LoginContainer = styled.div`
     display: flex;
@@ -49,18 +48,12 @@ const LoginPage = () => {
 };
 
 const Home = () => {
-    const {
-        data: expenses,
-        isLoading,
-        isSuccess,
-        isError,
-        error
-    } = useGetExpensesQuery();
+
 
     return (
         <Container>
             <ExpenseForm />
-            { isSuccess && <ExpensesList expenses={expenses} /> }
+            <ExpensesList />
         </Container>
     );
 }

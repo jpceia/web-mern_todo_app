@@ -2,17 +2,27 @@ import { Request, Response } from "express";
 import { AppDataSource } from "../datasource";
 import { Expense } from "../entities/expense";
 import { User } from "../entities/user";
+import { PAGE_SIZE } from "../constants";
 
 
 export const getExpenses = async (req: Request, res: Response) => {
+    const page = req.query.page ? parseInt(req.query.page as string) : 1;
+    if (page <= 0)
+        throw new Error("page must be greater than 0");
+
     const expenseRepository = AppDataSource.getRepository(Expense);
     try {
         const user = req.user as User;
-        const expenses = await expenseRepository.find({
+        const [expenses, total] = await expenseRepository.findAndCount({
             where: { userId: user.id },
-            order: { date: "DESC" }
+            order: { date: "DESC" },
+            take: PAGE_SIZE,
+            skip: (page - 1) * PAGE_SIZE
         });
-        res.status(200).send(expenses);
+        res.status(200).send({
+            data: expenses,
+            total,
+        });
     }
     catch (error) {
         res.status(400).send(error.message);

@@ -5,6 +5,7 @@ import DatePicker from 'react-datepicker';
 import Select from 'react-select';
 import "react-datepicker/dist/react-datepicker.css";
 import { NumericFormat } from 'react-number-format';
+import { useAddExpenseMutation } from '../api/apiSlice';
 
 
 const FormContainer = styled(Container)`
@@ -75,13 +76,16 @@ const categories = [
     { value: 'utilities', label: 'Utilities' },
 ];
 
+const emptyFormData = {
+    date: null,
+    category: null,
+    value: '',
+    description: '',
+}
+
 const ExpenseForm = () => {
-    const [formData, setFormData] = useState({
-        paymentDate: null,
-        category: null,
-        amount: '',
-        description: '',
-    });
+    const [formData, setFormData] = useState(emptyFormData);
+    const [ addExpense ] = useAddExpenseMutation()
 
     const handleValueChange = (key, value) => {
         setFormData((prevData) => ({
@@ -97,13 +101,13 @@ const ExpenseForm = () => {
 
     const handleAmountChange = (values) => {
         const { floatValue } = values;
-        handleValueChange('amount', floatValue || 0); // Set amount as float or an empty string if invalid
+        handleValueChange('value', floatValue || 0); // Set amount as float or an empty string if invalid
     };
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log(formData);
-        // Realize qualquer lógica adicional necessária para lidar com o envio do formulário
+        addExpense(formData);
+        setFormData(emptyFormData);
     };
 
     return (
@@ -114,8 +118,8 @@ const ExpenseForm = () => {
                     <Label>Payment date</Label>
                     <div>
                         <DatePicker
-                            selected={formData.paymentDate}
-                            onChange={(date) => handleValueChange('paymentDate', date)}
+                            selected={formData.date}
+                            onChange={(date) => handleValueChange('date', new Date(date))}
                             dateFormat="yyyy-MM-dd"
                             placeholderText="Select a date"
                             customInput={<Input />}
@@ -127,7 +131,7 @@ const ExpenseForm = () => {
                     <Select
                         options={categories}
                         value={formData.category}
-                        onChange={(option) => handleValueChange('category', option)}
+                        onChange={(option) => handleValueChange('category', option.value)}
                         placeholder="Select a category"
                         styles={customSelectStyles}
                     />
@@ -135,7 +139,7 @@ const ExpenseForm = () => {
                 <FormGroup>
                     <Label>Value</Label>
                     <NumericFormat
-                        value={formData.amount}
+                        value={formData.value}
                         onValueChange={handleAmountChange}
                         allowNegative={false}
                         decimalScale={2}

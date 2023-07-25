@@ -6,6 +6,7 @@ import ProtectedRoute from './shared/ProtectedRoute';
 import ExpenseForm from './components/ExpenseForm';
 import ExpensesList from './components/ExpensesList';
 import Container from './components/Container';
+import { useGetExpensesQuery } from './api/apiSlice';
 
 const LoginContainer = styled.div`
     display: flex;
@@ -48,47 +49,18 @@ const LoginPage = () => {
 };
 
 const Home = () => {
-    const expenses = [
-        {
-            id: 1,
-            description: "Groceries",
-            amount: 100,
-            category: "food",
-            paymentDate: "2021-01-01"
-        },
-        {
-            id: 2,
-            description: "Netflix",
-            amount: 20,
-            category: "entertainment",
-            paymentDate: "2021-01-02"
-        },
-        {
-            id: 3,
-            description: "Car wash",
-            amount: 50,
-            category: "transportation",
-            paymentDate: "2021-01-03"
-        },
-        {
-            id: 4,
-            description: "Salary",
-            amount: 1000,
-            category: "income",
-            paymentDate: "2021-01-04"
-        },
-        {
-            id: 5,
-            description: "Groceries",
-            amount: 100,
-            category: "food",
-            paymentDate: "2021-01-05"
-        }
-    ]
+    const {
+        data: expenses,
+        isLoading,
+        isSuccess,
+        isError,
+        error
+    } = useGetExpensesQuery();
+
     return (
         <Container>
             <ExpenseForm />
-            <ExpensesList expenses={expenses} />
+            { isSuccess && <ExpensesList expenses={expenses} /> }
         </Container>
     );
 }

@@ -8,7 +8,10 @@ export const getExpenses = async (req: Request, res: Response) => {
     const expenseRepository = AppDataSource.getRepository(Expense);
     try {
         const user = req.user as User;
-        const expenses = await expenseRepository.findBy({ userId: user.id });
+        const expenses = await expenseRepository.find({
+            where: { userId: user.id },
+            order: { date: "DESC" }
+        });
         res.status(200).send(expenses);
     }
     catch (error) {

@@ -1,29 +1,14 @@
 import { format } from 'date-fns';
 import React, { useState } from 'react';
-import styled from 'styled-components';
 import { useDeleteExpenseMutation, useGetExpensesQuery } from '../api/expenseApi';
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableCell from '@mui/material/TableCell';
+import TableContainer from '@mui/material/TableContainer';
+import TableHead from '@mui/material/TableHead';
+import TableRow from '@mui/material/TableRow';
+import Paper from '@mui/material/Paper';
 
-const Table = styled.table`
-    width: 100%;
-    border-collapse: collapse;
-`;
-
-const TableHeader = styled.th`
-    padding: 12px;
-    text-align: left;
-    border-bottom: 1px solid #ddd;
-    background-color: #888;
-    color: #ffffff;
-`;
-
-const TableData = styled.td`
-    padding: 12px;
-    border-bottom: 1px solid #ddd;
-`;
-
-const TableRow = styled.tr`
-    background-color: #eee;
-`;
 
 const ExpensesListRow = ({ expense }) => {
     const { id, date, category, value, description } = expense;
@@ -34,7 +19,7 @@ const ExpensesListRow = ({ expense }) => {
     if (isDeleting)
         return (
             <TableRow>
-                <TableData colSpan="5">Deleting...</TableData>
+                <TableCell colSpan="5">Deleting...</TableCell>
             </TableRow>
         );
     // format date to "YYYY-MM-DD"
@@ -48,11 +33,11 @@ const ExpensesListRow = ({ expense }) => {
      
     return (
         <TableRow>
-            <TableData>{paymentDate}</TableData>
-            <TableData>{category}</TableData>
-            <TableData>{amount}</TableData>
-            <TableData>{description}</TableData>
-            <TableData><button onClick={() => deleteExpense(id)}>❌</button></TableData>
+            <TableCell>{paymentDate}</TableCell>
+            <TableCell>{category}</TableCell>
+            <TableCell>{amount}</TableCell>
+            <TableCell>{description}</TableCell>
+            <TableCell><button onClick={() => deleteExpense(id)}>❌</button></TableCell>
         </TableRow>
     );
 }
@@ -81,25 +66,27 @@ const ExpensesList = () => {
         return null;
 
     return (
-        <Table>
-            <thead>
-                <tr>
-                    <TableHeader>Payment date</TableHeader>
-                    <TableHeader>Category</TableHeader>
-                    <TableHeader>Amout</TableHeader>
-                    <TableHeader>Description</TableHeader>
-                    <TableHeader></TableHeader>
-                </tr>
-            </thead>
-            <tbody>
-                {expenses.data.map((expense, index) => (
-                    <ExpensesListRow
-                        key={index}
-                        expense={expense}
-                    />
-                ))}
-            </tbody>
-        </Table>
+        <TableContainer component={Paper}>
+            <Table>
+                <TableHead>
+                    <TableRow>
+                        <TableCell>Payment date</TableCell>
+                        <TableCell>Category</TableCell>
+                        <TableCell>Amout</TableCell>
+                        <TableCell>Description</TableCell>
+                        <TableCell></TableCell>
+                    </TableRow>
+                </TableHead>
+                <TableBody>
+                    {expenses.data.map((expense, index) => (
+                        <ExpensesListRow
+                            key={index}
+                            expense={expense}
+                        />
+                    ))}
+                </TableBody>
+            </Table>
+        </TableContainer>
     );
 };
 

@@ -29,6 +29,8 @@ const Spacer = styled.div`
 
 const Layout = ({ children }) => {
     const { profile, loading } = useSelector((state) => state.auth);
+    if (loading)
+        return <div>Loading...</div>
     return (
         <>
             <NavbarContainer>

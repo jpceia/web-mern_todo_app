@@ -10,6 +10,8 @@ import { fetchProfile } from './auth/authSlice';
 
 const container = document.getElementById('root');
 
+store.dispatch(fetchProfile());
+
 // Initial render
 createRoot(container).render(
     <React.StrictMode>
@@ -20,6 +22,3 @@ createRoot(container).render(
         </Provider>
     </React.StrictMode>
 );
-
-store.dispatch(expenseSlice.endpoints.getExpenses.initiate());
-store.dispatch(fetchProfile());

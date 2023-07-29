@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { logout } from '../auth/authSlice';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 const NavbarContainer = styled.div`
     display: flex;
@@ -28,6 +28,7 @@ const Spacer = styled.div`
 
 
 const Layout = ({ children }) => {
+    const dispatch = useDispatch();
     const { profile, loading } = useSelector((state) => state.auth);
     if (loading)
         return <div>Loading...</div>
@@ -37,9 +38,9 @@ const Layout = ({ children }) => {
                 <ProjectTitle>Expense Tracker</ProjectTitle>
                 <Spacer />
                 { profile && (
-                    <div onClick={() => logout()}>
+                    <button onClick={() => dispatch(logout())}>
                         Logout
-                    </div>)
+                    </button>)
                 }
             </NavbarContainer>
             <div>{ children }</div>

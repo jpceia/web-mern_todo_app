@@ -3,11 +3,12 @@ import googleRoutes from "./google";
 import { ActivityType, UserHistory } from "../../entities/user-history";
 import { User } from "../../entities/user";
 import { AppDataSource } from "../../datasource";
+import isAuthenticated from "../../middleware/isAuthenticated";
 
 
 const router = Router();
 
-router.get('/logout', (req: Request, res: Response) => {
+router.get('/logout', isAuthenticated, (req: Request, res: Response) => {
   // req.logout();
   req.session.destroy(async () => {
     const user = req.user as User;

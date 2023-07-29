@@ -22,10 +22,10 @@ const TableData = styled.td`
 `;
 
 const TableRow = styled.tr`
-    background-color: ${(props) => (props.isEven ? '#ddd' : '#ffffff')};
+    background-color: #eee;
 `;
 
-const ExpensesListRow = ({ expense, isEven }) => {
+const ExpensesListRow = ({ expense }) => {
     const { id, date, category, value, description } = expense;
     const [ deleteExpense, {
         isLoading: isDeleting
@@ -33,7 +33,7 @@ const ExpensesListRow = ({ expense, isEven }) => {
 
     if (isDeleting)
         return (
-            <TableRow isEven={isEven}>
+            <TableRow>
                 <TableData colSpan="5">Deleting...</TableData>
             </TableRow>
         );
@@ -47,7 +47,7 @@ const ExpensesListRow = ({ expense, isEven }) => {
         }).format(value);
      
     return (
-        <TableRow isEven={isEven}>
+        <TableRow>
             <TableData>{paymentDate}</TableData>
             <TableData>{category}</TableData>
             <TableData>{amount}</TableData>
@@ -96,7 +96,6 @@ const ExpensesList = () => {
                     <ExpensesListRow
                         key={index}
                         expense={expense}
-                        isEven={index % 2 === 0}
                     />
                 ))}
             </tbody>

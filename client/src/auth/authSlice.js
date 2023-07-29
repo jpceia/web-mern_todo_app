@@ -1,7 +1,6 @@
 import axios from "axios";
 import { BACKEND_URL } from "../constants";
-import { createAsyncThunk, createSelector, createSlice } from "@reduxjs/toolkit";
-import { useDispatch } from "react-redux";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { expenseSlice } from "../api/expenseApi";
 
 export const login = () => {

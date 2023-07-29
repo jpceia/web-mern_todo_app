@@ -5,7 +5,7 @@ import DatePicker from 'react-datepicker';
 import Select from 'react-select';
 import "react-datepicker/dist/react-datepicker.css";
 import { NumericFormat } from 'react-number-format';
-import { useAddExpenseMutation } from '../api/apiSlice';
+import { useAddExpenseMutation } from '../api/expenseApi';
 
 
 const FormContainer = styled(Container)`

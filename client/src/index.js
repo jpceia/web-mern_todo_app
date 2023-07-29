@@ -1,15 +1,14 @@
 import React from 'react';
 import { createRoot } from 'react-dom/client';
 import { BrowserRouter } from 'react-router-dom';
-import { apiSlice } from './api/apiSlice';
+import { expenseSlice } from './api/expenseApi';
 import App from './App';
 import './index.css';
 import { store } from './store';
 import { Provider } from 'react-redux';
+import { fetchProfile } from './auth/authSlice';
 
 const container = document.getElementById('root');
-
-store.dispatch(apiSlice.endpoints.getExpenses.initiate());
 
 // Initial render
 createRoot(container).render(
@@ -21,4 +20,6 @@ createRoot(container).render(
         </Provider>
     </React.StrictMode>
 );
+
+store.dispatch(expenseSlice.endpoints.getExpenses.initiate());
 store.dispatch(fetchProfile());

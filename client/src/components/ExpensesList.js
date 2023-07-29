@@ -1,7 +1,7 @@
 import { format } from 'date-fns';
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import { useDeleteExpenseMutation, useGetExpensesQuery } from '../api/apiSlice';
+import { useDeleteExpenseMutation, useGetExpensesQuery } from '../api/expenseApi';
 
 const Table = styled.table`
     width: 100%;

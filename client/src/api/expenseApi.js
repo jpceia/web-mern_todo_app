@@ -2,26 +2,26 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { BACKEND_URL } from '../constants';
 
 
-export const apiSlice = createApi({
-    reducerPath: 'api',
-    baseQuery: fetchBaseQuery({ baseUrl: `${BACKEND_URL}/api` }),
+export const expenseSlice = createApi({
+    reducerPath: 'expenses',
+    baseQuery: fetchBaseQuery({ baseUrl: `${BACKEND_URL}/api/expense` }),
     credentials: 'include',
     tagTypes: ['Expense'],
     endpoints: builder => ({
         getExpenses: builder.query({
             query: () => ({
-                url: '/expense',
+                url: '/',
                 credentials: 'include',
                 method: 'GET'
             }),
             providesTags: ['Expense']
         }),
         getExpense: builder.query({
-            query: id => `/expense/${id}`
+            query: id => `/${id}`
         }),
         addExpense: builder.mutation({
             query: body => ({
-                url: '/expense',
+                url: '/',
                 credentials: 'include',
                 method: 'POST',
                 body
@@ -30,15 +30,11 @@ export const apiSlice = createApi({
         }),
         deleteExpense: builder.mutation({
             query: id => ({
-                url: `/expense/${id}`,
+                url: `/${id}`,
                 credentials: 'include',
                 method: 'DELETE'
             }),
             invalidatesTags: ['Expense']
-        }),
-        getMe: builder.query({
-            query: () => '/me',
-            providesTags: ['Me']
         })
     })
 })
@@ -48,6 +44,5 @@ export const {
     useGetExpensesQuery,
     useGetExpenseQuery,
     useAddExpenseMutation,
-    useDeleteExpenseMutation,
-    useGetMeQuery
-} = apiSlice
+    useDeleteExpenseMutation
+} = expenseSlice

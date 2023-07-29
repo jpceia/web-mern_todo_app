@@ -1,11 +1,12 @@
 import styled from 'styled-components';
 import Layout from './shared/layout';
 import { Route, Routes } from 'react-router-dom';
-import { AuthProvider, useAuth } from './context/auth';
 import ProtectedRoute from './shared/ProtectedRoute';
 import ExpenseForm from './components/ExpenseForm';
 import ExpensesList from './components/ExpensesList';
 import Container from './components/Container';
+import { useSelector } from 'react-redux';
+import { login } from './auth/authSlice';
 
 const LoginContainer = styled.div`
     display: flex;
@@ -34,12 +35,12 @@ const LoginButton = styled.button`
 
 
 const LoginPage = () => {
-    const { login, loading } = useAuth();
+    const { loading } = useSelector((state) => state.auth);
     //  <UserLogo src={userLogoUrl} alt="User Logo" />
     return (
         <LoginContainer>
         {
-            loading 
+            loading
             ? <div>Loading...</div>
             : <LoginButton onClick={login}>LOGIN</LoginButton>
         }
@@ -48,8 +49,6 @@ const LoginPage = () => {
 };
 
 const Home = () => {
-
-
     return (
         <Container>
             <ExpenseForm />
@@ -58,17 +57,10 @@ const Home = () => {
     );
 }
 
-function App() {
-    
-    return (
-        <AuthProvider>
-            <AuthApp />
-        </AuthProvider>
-    );
-}
 
-function AuthApp() {
-    const { profile } = useAuth();
+function App() {
+
+    const profile = useSelector(state => state.auth.profile);
     return (
         <Layout>
             <Routes>

@@ -21,3 +21,4 @@ createRoot(container).render(
         </Provider>
     </React.StrictMode>
 );
+store.dispatch(fetchProfile());

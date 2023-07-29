@@ -4,34 +4,25 @@ import { Route, Routes } from 'react-router-dom';
 import ProtectedRoute from './shared/ProtectedRoute';
 import ExpenseForm from './components/ExpenseForm';
 import ExpensesList from './components/ExpensesList';
-import Container from './components/Container';
+import { Button, Container } from '@mui/material';
 import { useSelector } from 'react-redux';
 import { login } from './auth/authSlice';
 
-const LoginContainer = styled.div`
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 100vh;
-`;
-
-const LoginButton = styled.button`
-    padding: 12px 24px;
-    font-size: 18px;
-    background-color: #2ecc71;
-    color: #fff;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    transition: box-shadow 0.3s ease-in-out, background-color 0.3s ease-in-out, color 0.3s ease-in-out;
-
-    &:hover {
-        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-        background-color: #1b9e49;
-        color: #fff;
-    }
-`;
+const LoginContainer = ({ children }) => {
+    return (
+      <Container
+        maxWidth="xs"
+        sx={{
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          height: '100vh',
+        }}
+      >
+        {children}
+      </Container>
+    );
+  };
 
 
 const LoginPage = () => {
@@ -42,7 +33,7 @@ const LoginPage = () => {
         {
             loading
             ? <div>Loading...</div>
-            : <LoginButton onClick={login}>LOGIN</LoginButton>
+            : <Button variant="contained" color="primary" size="large" onClick={login}>LOGIN</Button>
         }
         </LoginContainer>
     );
@@ -50,7 +41,10 @@ const LoginPage = () => {
 
 const Home = () => {
     return (
-        <Container>
+        <Container
+            maxWidth="lg"
+            sx={{ padding: '15px', margin: '0 auto' }}
+        >
             <ExpenseForm />
             <ExpensesList />
         </Container>

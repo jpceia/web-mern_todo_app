@@ -1,73 +1,10 @@
 import React, { useState } from 'react';
-import styled from 'styled-components';
-import Container from './Container';
-import DatePicker from 'react-datepicker';
-import Select from 'react-select';
-import "react-datepicker/dist/react-datepicker.css";
-import { NumericFormat } from 'react-number-format';
+import { DatePicker } from '@mui/x-date-pickers';
 import { useAddExpenseMutation } from '../api/expenseApi';
+import FormControl from '@mui/material/FormControl';
+import Typography from '@mui/material/Typography';
+import { Grid, Paper, TextField, Button, InputLabel, Select, MenuItem } from '@mui/material';
 
-
-const FormContainer = styled(Container)`
-    background-color: #eee;
-    padding: 20px;
-    margin-top: 50px;
-    border-radius: 5px;
-    width: 50%;
-`;
-
-const Form = styled.form`
-    display: flex;
-    flex-flow: column wrap;
-`;
-
-// stretch
-const FormGroup = styled.div`
-    margin-bottom: 10px;
-    display: flex;
-    flex-flow: column wrap;
-    align-items: stretch;
-`;
-
-const Label = styled.label`
-    font-weight: bold;
-    display: block;
-    font-size: small;
-`;
-
-const Input = styled.input`
-    display: block;
-    padding: 5px;
-    border: 2px solid #ccc;
-    border-radius: 5px;
-`;
-
-const TextArea = styled.textarea`
-    padding: 5px;
-    border: 2px solid #ccc;
-    border-radius: 5px;
-    height: 10em;
-    resize: none;
-`;
-
-const SubmitButton = styled.button`
-    padding: 10px 20px;
-    background-color: #2196f3;
-    font-weight: bold;
-    color: #ffffff;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    width: 100%;
-`;
-
-const customSelectStyles = {
-    control: (provided) => ({
-      ...provided,
-      border: '2px solid #ccc',
-      borderRadius: '5px'
-    }),
-  };
 
 const categories = [
     { value: 'food', label: 'Food' },
@@ -111,56 +48,78 @@ const ExpenseForm = () => {
     };
 
     return (
-        <FormContainer>
-            <h2>New expense</h2>
-            <Form onSubmit={handleSubmit}>
-                <FormGroup>
-                    <Label>Payment date</Label>
-                    <div>
+        <Paper sx={{ padding: '20px', maxWidth: '500px', margin: 'auto' }}>
+        <Typography
+            variant="h4"
+            component="h2"
+            gutterBottom>
+            New Expense
+        </Typography>
+        <form onSubmit={handleSubmit}>
+            <Grid container spacing={2} alignItems="center">
+                <Grid item xs={12} md={6}>
+                    <FormControl fullWidth>
                         <DatePicker
-                            selected={formData.date}
-                            onChange={(date) => handleValueChange('date', new Date(date))}
-                            dateFormat="yyyy-MM-dd"
-                            placeholderText="Select a date"
-                            customInput={<Input />}
+                            value={formData.date}
+                            onChange={(e) => handleValueChange('date', e.target.value)}
+                            label="Payment date"
+                            variant="outlined"
+                            InputLabelProps={{
+                                shrink: true,
+                            }}
                         />
-                    </div>
-                </FormGroup>
-                <FormGroup>
-                    <Label>Category</Label>
+                    </FormControl>
+                </Grid>
+            <Grid item xs={12} md={6}>
+                <FormControl fullWidth>
+                    <InputLabel>Category</InputLabel>
                     <Select
-                        options={categories}
                         value={formData.category}
-                        onChange={(option) => handleValueChange('category', option.value)}
-                        placeholder="Select a category"
-                        styles={customSelectStyles}
-                    />
-                </FormGroup>
-                <FormGroup>
-                    <Label>Value</Label>
-                    <NumericFormat
+                        label="Select a category"
+                        onChange={(e) => handleValueChange('category', e.target.value)}
+                        variant="outlined"
+                    >
+                        {categories.map((category) => (
+                        <MenuItem key={category.value} value={category.value}>
+                            {category.label}
+                        </MenuItem>
+                        ))}
+                    </Select>
+                </FormControl>
+            </Grid>
+            <Grid item xs={12}>
+                <FormControl fullWidth>
+                    <TextField
                         value={formData.value}
-                        onValueChange={handleAmountChange}
-                        allowNegative={false}
-                        decimalScale={2}
-                        fixedDecimalScale
-                        thousandSeparator=" "
-                        decimalSeparator="."
-                        suffix=" €"
-                        customInput={Input}
+                        label="Amount"
+                        onChange={handleAmountChange}
+                        inputProps={{ inputMode: 'numeric', pattern: '[0-9]+' }}
+                        variant="outlined"
                     />
-                </FormGroup>
-                <FormGroup>
-                    <Label>Description</Label>
-                    <TextArea
-                        name="description"
-                        value={formData.description}
-                        onChange={handleChange}
-                    />
-                </FormGroup>
-                <SubmitButton type="submit">Submit</SubmitButton>
-            </Form>
-        </FormContainer>
+                </FormControl>
+            </Grid>
+            </Grid>
+            <FormControl fullWidth sx={{ mt: 2 }}>
+                <TextField
+                    name="description"
+                    label="Description"
+                    value={formData.description}
+                    onChange={handleChange}
+                    variant="outlined"
+                    multiline
+                    rows={4}
+                    maxRows={4}
+                />
+            </FormControl>
+            <Button
+                variant="contained"
+                type="submit"
+                color="primary"
+                sx={{ mt: 2 }}>
+            Submit
+            </Button>
+        </form>
+      </Paper>
     );
 };
 
